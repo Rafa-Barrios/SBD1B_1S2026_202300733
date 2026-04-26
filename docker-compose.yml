@@ -4,7 +4,6 @@ services:
     container_name: oracle_bd1
     environment:
       ORACLE_PASSWORD: admin1234
-      ORACLE_DATABASE: XEPDB1
     ports:
       - "1521:1521"
     volumes:
