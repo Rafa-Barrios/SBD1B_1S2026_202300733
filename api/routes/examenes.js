@@ -39,6 +39,21 @@ router.post('/', async (req, res) => {
     finally { if (conn) await conn.close(); }
 });
 
+router.put('/:id', async (req, res) => {
+    let conn;
+    try {
+        const { registro_id_registro, correlativo_id_correlativo } = req.body;
+        conn = await getConnection();
+        await conn.execute(
+            'UPDATE EXAMEN SET REGISTRO_ID_REGISTRO=:reg_id, CORRELATIVO_ID_CORRELATIVO=:cor_id WHERE ID_EXAMEN=:id',
+            [registro_id_registro, correlativo_id_correlativo, req.params.id],
+            { autoCommit: true }
+        );
+        res.json({ mensaje: 'Examen actualizado correctamente' });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+    finally { if (conn) await conn.close(); }
+});
+
 router.delete('/:id', async (req, res) => {
     let conn;
     try {
